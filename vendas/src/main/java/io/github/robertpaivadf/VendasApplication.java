@@ -18,10 +18,34 @@ public class VendasApplication {
     public CommandLineRunner init(@Autowired RepClientes repClientes){
         return args -> {
             repClientes.salvar(new Cliente("Robert"));
+            repClientes.salvar(new Cliente("Roberto"));
             repClientes.salvar(new Cliente("Maria"));
 
             List<Cliente> todosClientes = repClientes.obterTodos();
             todosClientes.forEach(System.out::println);
+            System.out.println("-----------------------------TODOS------------------------------");
+            System.out.println();
+
+            todosClientes.forEach(c -> {
+                c.setNome(c.getNome() + " - Atualizado");
+                repClientes.atualizar(c);
+            });
+            todosClientes = repClientes.obterTodos();
+            todosClientes.forEach(System.out::println);
+            System.out.println("-----------------------------UPDATE------------------------------");
+            System.out.println();
+
+            todosClientes = repClientes.buscarPorNome("Robert");
+            todosClientes.forEach(System.out::println);
+            System.out.println("-----------------------------BUSCA POR NOME------------------------------");
+            System.out.println();
+
+            repClientes.deletar(2);
+            todosClientes = repClientes.obterTodos();
+            todosClientes.forEach(System.out::println);
+            System.out.println("-----------------------------DELETA ID=2------------------------------");
+            System.out.println();
+
         };
     }
 
