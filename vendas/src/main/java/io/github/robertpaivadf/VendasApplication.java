@@ -18,7 +18,7 @@ public class VendasApplication {
     public CommandLineRunner init(@Autowired RepClientes repClientes){
         return args -> {
             repClientes.salvar(new Cliente("Robert"));
-            repClientes.salvar(new Cliente("Roberto"));
+            repClientes.salvar(new Cliente("Carlos"));
             repClientes.salvar(new Cliente("Maria"));
 
             List<Cliente> todosClientes = repClientes.obterTodos();

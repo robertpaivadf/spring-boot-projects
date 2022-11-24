@@ -1,10 +1,18 @@
 package io.github.robertpaivadf.domain.entities;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "tb_cliente")//, schema = "vendas")
 public class Cliente {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+    private String nome;
 
     public Cliente(){
     }
-
     public Cliente(String nome) {
         this.nome = nome;
     }
@@ -13,10 +21,6 @@ public class Cliente {
         this.id = id;
         this.nome = nome;
     }
-
-    private Integer id;
-    private String nome;
-
     public Integer getId() {
         return id;
     }

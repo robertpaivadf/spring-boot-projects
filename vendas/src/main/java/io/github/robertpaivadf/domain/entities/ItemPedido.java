@@ -1,7 +1,13 @@
 package io.github.robertpaivadf.domain.entities;
 
+import javax.persistence.*;
+
+//@Entity
+//@Table(name = "tb_item_pedido")//, schema = "vendas")
 public class ItemPedido {
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private Pedido pedido;
     private Produto produto;
