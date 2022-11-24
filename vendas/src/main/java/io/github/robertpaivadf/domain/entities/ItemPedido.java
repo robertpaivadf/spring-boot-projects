@@ -2,15 +2,22 @@ package io.github.robertpaivadf.domain.entities;
 
 import javax.persistence.*;
 
-//@Entity
-//@Table(name = "tb_item_pedido")//, schema = "vendas")
+@Entity
+@Table(name = "tb_item_pedido")//, schema = "vendas")
 public class ItemPedido {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+    @ManyToOne
+    @JoinColumn(name="pedido_id")
     private Pedido pedido;
+
+    @ManyToOne
+    @JoinColumn(name="produto_id")
     private Produto produto;
+
     private Integer quantidade;
 
     public Integer getId() {
