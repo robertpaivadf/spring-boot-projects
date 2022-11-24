@@ -40,7 +40,7 @@ public class VendasApplication {
             System.out.println("-----------------------------BUSCA POR NOME------------------------------");
             System.out.println();
 
-            todosClientes = repClientes.findByNomeLike("Robert");
+            todosClientes = repClientes.encontrarPorNome("Robert");
             todosClientes.forEach(System.out::println);
             System.out.println("-----------------------------BUSCA POR NOME LIKE------------------------------");
             System.out.println();
