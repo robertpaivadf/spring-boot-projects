@@ -40,12 +40,22 @@ public class VendasApplication {
             System.out.println("-----------------------------BUSCA POR NOME------------------------------");
             System.out.println();
 
+            todosClientes = repClientes.findByNomeLike("Robert");
+            todosClientes.forEach(System.out::println);
+            System.out.println("-----------------------------BUSCA POR NOME LIKE------------------------------");
+            System.out.println();
+
             todosClientes.forEach(c -> {
                 repClientes.delete(c);
             });
             todosClientes = repClientes.findAll();
             todosClientes.forEach(System.out::println);
             System.out.println("-----------------------------DELETA ID=2------------------------------");
+            System.out.println();
+
+            boolean existe = repClientes.existsByNome("Maria - Atualizado");
+            System.out.println("Existe? " + existe);
+            System.out.println("-----------------------------EXISTE------------------------------");
             System.out.println();
 
         };
