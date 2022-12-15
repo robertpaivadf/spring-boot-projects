@@ -1,7 +1,7 @@
 package io.github.robertpaivadf;
 
 import io.github.robertpaivadf.domain.entities.Cliente;
-import io.github.robertpaivadf.domain.repositories.RepClientes;
+import io.github.robertpaivadf.domain.repositories.RepCliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,7 +15,7 @@ public class VendasApplication {
 
     //Teste para salvar um cliente no banco de dados
     @Bean
-    public CommandLineRunner init(@Autowired RepClientes repClientes){
+    public CommandLineRunner init(@Autowired RepCliente repClientes){
         return args -> {
             repClientes.save(new Cliente("Robert"));
             repClientes.save(new Cliente("Carlos"));

@@ -13,7 +13,7 @@ public class Cliente {
     private Integer id;
     private String nome;
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente") //nome da propriedade/objeto que está mapeado dentro de pedido
     private Set<Pedido> pedidos;
 
     public Set<Pedido> getPedidos() {

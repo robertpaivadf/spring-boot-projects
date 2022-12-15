@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface RepClientes extends JpaRepository<Cliente, Integer> {
+public interface RepCliente extends JpaRepository<Cliente, Integer> {
     List<Cliente> findByNome(String nome);
     List<Cliente> findByNomeLike(String nome);
     List<Cliente> findByNomeLikeOrIdOrderById(String nome, Integer id);
