@@ -21,6 +21,8 @@ public interface RepCliente extends JpaRepository<Cliente, Integer> {
     @Query(value = "select c.* from tb_cliente c where c.nome like '%nome%'", nativeQuery = true)
     List<Cliente> encontrarPorNome(@Param("nome") String nome);
 
+    @Query(" select c from Cliente c left join c.pedidos p where c.id = :id ")
+    Cliente findClienteFetchPedidos (@Param("id") Integer id);
 
 
 }
