@@ -36,11 +36,12 @@ public class VendasApplication {
             repPedido.save(p1);
 
             //depois de implementar o fetch no repositorio de cliente
-            Cliente cliente =  repCliente.findClienteFetchPedidos(c1.getId());
-            System.out.println(cliente);
-            System.out.println(cliente.getPedidos());
+//            Cliente cliente =  repCliente.findClienteFetchPedidos(c1.getId());
+//            System.out.println(cliente);
+//            System.out.println(cliente.getPedidos());
 
-
+            List<Pedido> listaPedidos = repPedido.findByCliente(c1);
+            listaPedidos.forEach(System.out::println);
 
         };
     }
