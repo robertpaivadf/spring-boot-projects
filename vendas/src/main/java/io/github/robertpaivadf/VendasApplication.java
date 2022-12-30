@@ -1,5 +1,6 @@
 package io.github.robertpaivadf;
 
+import ch.qos.logback.core.CoreConstants;
 import io.github.robertpaivadf.domain.entities.Cliente;
 import io.github.robertpaivadf.domain.entities.Pedido;
 import io.github.robertpaivadf.domain.repositories.RepCliente;
@@ -31,9 +32,16 @@ public class VendasApplication {
             Pedido p1 = new Pedido();
             p1.setCliente(c1);
             p1.setDataPedido(LocalDate.now());
-            p1.setTotal(BigDecimal.valueOf(100));
-//
+            p1.setTotal(BigDecimal.valueOf(100));//
             repPedido.save(p1);
+
+            //depois de implementar o fetch no repositorio de cliente
+            Cliente cliente =  repCliente.findClienteFetchPedidos(c1.getId());
+            System.out.println(cliente);
+            System.out.println(cliente.getPedidos());
+
+
+
         };
     }
 

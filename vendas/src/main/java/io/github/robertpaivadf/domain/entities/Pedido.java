@@ -19,7 +19,16 @@ public class Pedido {
 
     private LocalDate dataPedido;
 
-    //@Column(length = 20, precision = 2)
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "id=" + id +
+                ", dataPedido=" + dataPedido +
+                ", total=" + total +
+                '}';
+    }
+
+    @Column(precision = 20, scale=2)
     private BigDecimal total;
 
     @OneToMany(mappedBy = "pedido")
