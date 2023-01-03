@@ -1,5 +1,7 @@
 package io.github.robertpaivadf.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +15,8 @@ public class Cliente {
     private Integer id;
     private String nome;
 
+
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY) //nome da propriedade/objeto que está mapeado dentro de pedido
     private Set<Pedido> pedidos;
 
