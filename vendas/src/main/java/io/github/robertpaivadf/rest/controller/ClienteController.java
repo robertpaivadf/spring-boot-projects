@@ -3,6 +3,8 @@ package io.github.robertpaivadf.rest.controller;
 import io.github.robertpaivadf.domain.entities.Cliente;
 import io.github.robertpaivadf.domain.repositories.RepCliente;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -56,7 +58,19 @@ public class ClienteController {
                     repCliente.save(cliente);
                     return ResponseEntity.noContent().build();
                 }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
+    @GetMapping("/clientes")
+    public ResponseEntity findCliente ( Cliente filtro){ //pode passar as propriedades nome, cpf... na URL que ele assume como obj java TOP
+
+        ExampleMatcher matcher = ExampleMatcher
+                .matching()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+
+        Example example = Example.of(filtro, matcher);
+        List<Cliente> lista = repCliente.findAll(example);
+        return ResponseEntity.ok(lista);
 
     }
 

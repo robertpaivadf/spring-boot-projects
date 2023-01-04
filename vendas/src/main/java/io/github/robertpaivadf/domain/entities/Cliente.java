@@ -3,7 +3,6 @@ package io.github.robertpaivadf.domain.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -15,9 +14,13 @@ public class Cliente {
     private Integer id;
     private String nome;
 
+    @Column(name = "cpf", length = 11)
+    private String cpf;
+
 
     @JsonIgnore
-    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY) //nome da propriedade/objeto que está mapeado dentro de pedido
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+    //nome da propriedade/objeto que está mapeado dentro de pedido
     private Set<Pedido> pedidos;
 
     public Set<Pedido> getPedidos() {
@@ -28,8 +31,9 @@ public class Cliente {
         this.pedidos = pedidos;
     }
 
-    public Cliente(){
+    public Cliente() {
     }
+
     public Cliente(String nome) {
         this.nome = nome;
     }
@@ -38,6 +42,7 @@ public class Cliente {
         this.id = id;
         this.nome = nome;
     }
+
     public Integer getId() {
         return id;
     }
@@ -52,6 +57,14 @@ public class Cliente {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     @Override
