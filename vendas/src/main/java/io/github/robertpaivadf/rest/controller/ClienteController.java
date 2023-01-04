@@ -5,63 +5,59 @@ import io.github.robertpaivadf.domain.repositories.RepCliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
-@Controller
-@RequestMapping("/api")
+@RestController
+@RequestMapping("/api/clientes")
 public class ClienteController {
 
     @Autowired
     RepCliente repCliente;
 
-    @GetMapping("/clientes/{id}")
-    @ResponseBody
-    public ResponseEntity getClienteById(@PathVariable Integer id) {
-        Optional<Cliente> cliente = repCliente.findById(id);
-        if(cliente.isPresent()){
-            return ResponseEntity.ok(cliente.get());
-        }
-        return ResponseEntity.notFound().build();
-    }
-
-    @PostMapping("/clientes")
-    @ResponseBody
-    public ResponseEntity saveCliente(@RequestBody Cliente cliente){
-            Cliente clienteSalvo = repCliente.save(cliente);
-        return ResponseEntity.ok(clienteSalvo);
-    }
-
-    @DeleteMapping("/clientes/{id}")
-    @ResponseBody
-    public ResponseEntity deleteCliente(@PathVariable Integer id) {
-        Optional<Cliente> cliente = repCliente.findById(id);
-        if(cliente.isPresent()){
-            repCliente.delete(cliente.get());
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
-    }
-
-
-    @PutMapping("/clientes/{id}")
-    @ResponseBody
-    public ResponseEntity atualizarCliente(@PathVariable Integer id, @RequestBody Cliente cliente){
+    @GetMapping("{id}")
+    public Cliente getClienteById(@PathVariable Integer id) {
         return repCliente
                 .findById(id)
-                .map( clienteExistente -> {
-                    cliente.setId(clienteExistente.getId());
-                    repCliente.save(cliente);
-                    return ResponseEntity.noContent().build();
-                }).orElseGet(() -> ResponseEntity.notFound().build());
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
     }
 
-    @GetMapping("/clientes")
-    public ResponseEntity findCliente ( Cliente filtro){ //pode passar as propriedades nome, cpf... na URL que ele assume como obj java TOP
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Cliente save(@RequestBody Cliente cliente) {
+        return repCliente.save(cliente);
+    }
+
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Integer id) {
+        repCliente.findById(id)
+                .map(cliente -> {
+                    repCliente.delete(cliente);
+                    return cliente;
+                })
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
+
+    }
+
+
+    @PutMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@PathVariable Integer id, @RequestBody Cliente cliente) {
+        repCliente
+                .findById(id)
+                .map(clienteExistente -> {
+                    cliente.setId(clienteExistente.getId());
+                    repCliente.save(cliente);
+                    return clienteExistente;
+                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
+    }
+
+    @GetMapping
+    public List<Cliente> find(Cliente filtro) { //pode passar as propriedades nome, cpf... na URL que ele assume como obj java TOP
 
         ExampleMatcher matcher = ExampleMatcher
                 .matching()
@@ -69,11 +65,8 @@ public class ClienteController {
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
 
         Example example = Example.of(filtro, matcher);
-        List<Cliente> lista = repCliente.findAll(example);
-        return ResponseEntity.ok(lista);
-
+        return repCliente.findAll(example);
     }
-
 
 
 }
