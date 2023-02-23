@@ -1,10 +1,18 @@
 package io.github.robertpaivadf.domain.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Set;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tb_pedido")//, schema = "vendas")
 public class Pedido {
@@ -19,58 +27,9 @@ public class Pedido {
 
     private LocalDate dataPedido;
 
-    @Override
-    public String toString() {
-        return "Pedido{" +
-                "id=" + id +
-                ", dataPedido=" + dataPedido +
-                ", total=" + total +
-                '}';
-    }
-
     @Column(precision = 20, scale=2)
     private BigDecimal total;
 
     @OneToMany(mappedBy = "pedido")
     private Set<ItemPedido> itemPedidos;
-
-    public Set<ItemPedido> getItemPedidos() {
-        return itemPedidos;
-    }
-
-    public void setItemPedidos(Set<ItemPedido> itemPedidos) {
-        this.itemPedidos = itemPedidos;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public LocalDate getDataPedido() {
-        return dataPedido;
-    }
-
-    public void setDataPedido(LocalDate dataPedido) {
-        this.dataPedido = dataPedido;
-    }
-
-    public BigDecimal getTotal() {
-        return total;
-    }
-
-    public void setTotal(BigDecimal total) {
-        this.total = total;
-    }
 }
