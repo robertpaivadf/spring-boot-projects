@@ -1,5 +1,6 @@
 package io.github.robertpaivadf.rest.controller;
 
+import io.github.robertpaivadf.exception.PedidoNEException;
 import io.github.robertpaivadf.exception.RegraNegocioException;
 import io.github.robertpaivadf.rest.ApiErrors;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,12 @@ public class ApplicationControllerAdvice {
         public ApiErrors handlerRegraNegocioException(RegraNegocioException ex){
             String mensagemErro = ex.getMessage();
             return new ApiErrors(mensagemErro);
+        }
+
+        @ExceptionHandler (PedidoNEException.class)
+        @ResponseStatus(HttpStatus.NOT_FOUND)
+        public ApiErrors handlerPedidoNFException(RegraNegocioException ex){
+            return new ApiErrors(ex.getMessage());
         }
 
 }

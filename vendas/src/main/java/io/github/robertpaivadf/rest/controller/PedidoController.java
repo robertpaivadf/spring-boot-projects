@@ -3,7 +3,9 @@ package io.github.robertpaivadf.rest.controller;
 import io.github.robertpaivadf.domain.entities.ItemPedido;
 import io.github.robertpaivadf.domain.entities.Pedido;
 import io.github.robertpaivadf.domain.entities.Produto;
+import io.github.robertpaivadf.domain.enums.StatusPedido;
 import io.github.robertpaivadf.domain.repositories.RepPedido;
+import io.github.robertpaivadf.rest.dto.AtuStatusPedidoDTO;
 import io.github.robertpaivadf.rest.dto.InformacoesItemPedidoDTO;
 import io.github.robertpaivadf.rest.dto.InformacoesPedidoDTO;
 import io.github.robertpaivadf.rest.dto.PedidoDTO;
@@ -74,6 +76,17 @@ public class PedidoController {
                         .build()
                 ).collect(Collectors.toList()); //pega essa strem e transforma numa lista
     }
+
+    @PatchMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateStatus(@PathVariable Integer id,
+                             @RequestBody AtuStatusPedidoDTO dto){
+
+        String novoStatus = dto.getNovoStatus();
+        service.atuStatusPedido(id, StatusPedido.valueOf(novoStatus));
+
+    }
+
 
 }
 

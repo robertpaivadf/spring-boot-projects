@@ -9,6 +9,7 @@ import io.github.robertpaivadf.domain.repositories.RepCliente;
 import io.github.robertpaivadf.domain.repositories.RepItensPedido;
 import io.github.robertpaivadf.domain.repositories.RepPedido;
 import io.github.robertpaivadf.domain.repositories.RepProduto;
+import io.github.robertpaivadf.exception.PedidoNEException;
 import io.github.robertpaivadf.exception.RegraNegocioException;
 import io.github.robertpaivadf.rest.dto.ItemPedidoDTO;
 import io.github.robertpaivadf.rest.dto.PedidoDTO;
@@ -55,6 +56,17 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public Optional<Pedido> obterPedidoCompleto(Integer id) {
         return repository.findByIdFetchItens(id);
+    }
+
+    @Override
+    @Transactional
+    public void atuStatusPedido(Integer id, StatusPedido statusPedido) {
+        repository
+                .findById(id)
+                .map( pedido -> {
+                    pedido.setStatus(statusPedido);
+                    return repository.save(pedido);
+                }).orElseThrow( () -> new PedidoNEException() );
     }
 
     private List<ItemPedido> converterItens(Pedido pedido, List<ItemPedidoDTO> itens){
