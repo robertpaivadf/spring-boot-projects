@@ -38,6 +38,10 @@ public class PedidoController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido não encontrado"));
     }
 
+    public void testarDevTools(){
+        
+    }
+
 
 }
 
