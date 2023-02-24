@@ -4,6 +4,7 @@ import io.github.robertpaivadf.domain.entities.Cliente;
 import io.github.robertpaivadf.domain.entities.ItemPedido;
 import io.github.robertpaivadf.domain.entities.Pedido;
 import io.github.robertpaivadf.domain.entities.Produto;
+import io.github.robertpaivadf.domain.enums.StatusPedido;
 import io.github.robertpaivadf.domain.repositories.RepCliente;
 import io.github.robertpaivadf.domain.repositories.RepItensPedido;
 import io.github.robertpaivadf.domain.repositories.RepPedido;
@@ -42,6 +43,7 @@ public class PedidoServiceImpl implements PedidoService {
         pedido.setTotal(dto.getTotal());
         pedido.setDataPedido(LocalDate.now());
         pedido.setCliente(cliente);
+        pedido.setStatus(StatusPedido.REALIZADO);
 
         List<ItemPedido> itensPedido = converterItens(pedido, dto.getItens());
         repository.save(pedido);
