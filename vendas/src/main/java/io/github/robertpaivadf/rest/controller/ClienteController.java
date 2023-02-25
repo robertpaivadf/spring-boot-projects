@@ -2,6 +2,7 @@ package io.github.robertpaivadf.rest.controller;
 
 import io.github.robertpaivadf.domain.entities.Cliente;
 import io.github.robertpaivadf.domain.repositories.RepCliente;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -13,13 +14,21 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/clientes")
+@Api("Api Clientes")
 public class ClienteController {
 
     @Autowired
     RepCliente repCliente;
 
     @GetMapping("{id}")
-    public Cliente getClienteById(@PathVariable Integer id) {
+    @ApiOperation("Obter detalhes de um cliente por id")
+    @ApiResponses({
+            @ApiResponse(code=200, message = "Cliente localizado"),
+            @ApiResponse(code=404, message = "Cliente não Encontrado")
+    })
+    public Cliente getClienteById(
+                                    @PathVariable
+                                    @ApiParam("Id do Cliente") Integer id) {
         return repCliente
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
