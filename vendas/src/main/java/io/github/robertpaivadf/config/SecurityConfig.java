@@ -25,12 +25,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .passwordEncoder(passwordEncoder())
                 .withUser("fulano")
                 .password(passwordEncoder().encode("123"))
-                .roles("user");
+                .roles("USER");
     }
 
     //Aqui será autorização (permissão de acesso aos endpoints)
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        super.configure(http);
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                    .antMatchers("/api/clientes/**")
+                        //.permitAll()
+                        //.hasRole("USER")
+                        .authenticated()
+                .and()
+                    .formLogin();
     }
 }
