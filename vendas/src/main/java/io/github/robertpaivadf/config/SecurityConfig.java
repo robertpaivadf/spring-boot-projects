@@ -15,7 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 //@EnableWebSecurity //Desligando totalmente todas as configurações defaults do Spring Security
-@Configuration
+//@Configuration //comentado para não dar conflito com SecurityConfigV2
+
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
