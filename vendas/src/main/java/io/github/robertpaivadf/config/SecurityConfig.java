@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.SecurityBuilder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
@@ -43,6 +44,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .httpBasic()
                 .and()
                 .authorizeHttpRequests()
+                .antMatchers(HttpMethod.GET, "/api/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/**").hasRole("USER")
+                .antMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PATCH, "/api/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable(); //desabilitando permite executar os metodos POST e DELETE

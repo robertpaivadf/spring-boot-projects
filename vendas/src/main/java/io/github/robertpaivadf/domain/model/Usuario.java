@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -25,10 +26,16 @@ public class Usuario implements UserDetails, Serializable {
     @Column(nullable = false)
     private String senha;
 
+    @ManyToMany
+    @JoinTable(name = "tb_regras_usuario",
+                joinColumns = @JoinColumn(name="id_usuario"),
+                inverseJoinColumns = @JoinColumn(name = "id_regra"))
+    private List<Regras> regras;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.regras;
     }
 
     @Override
