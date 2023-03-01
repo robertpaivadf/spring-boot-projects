@@ -15,6 +15,7 @@ public class Cliente {
     private String nome;
 
     @Column(name = "cpf", length = 11)
+
     private String cpf;
 
 
