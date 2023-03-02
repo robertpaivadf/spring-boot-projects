@@ -15,9 +15,9 @@ import java.util.List;
 public class PedidoDTO {
     //DTO = Data Tranfer Object
 
-    @NotNull (message = "Campo obrigatório cliente")
+    @NotNull (message = "{campo.codigo-cliente.obrigatorio}")
     private Integer cliente;
-    @NotNull (message = "Campo obrigatório total")
+    @NotNull (message = "{campo.total.obrigatorio}")
     private BigDecimal total;
     @NotEmptyList
     private List<ItemPedidoDTO> itens;
