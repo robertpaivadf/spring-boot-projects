@@ -1,6 +1,7 @@
 package io.github.robertpaivadf.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -17,6 +18,8 @@ public class Cliente {
     @NotEmpty(message = "Campo nome é obrigatório")
     private String nome;
 
+    @NotEmpty(message = "Campo cpf é obrigatório")
+    @CPF (message = "Informe um CPF válido")
     @Column(name = "cpf", length = 11)
 
     private String cpf;
