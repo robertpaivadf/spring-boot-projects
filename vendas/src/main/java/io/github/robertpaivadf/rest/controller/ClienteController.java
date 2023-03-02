@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -38,15 +39,15 @@ public class ClienteController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')") //Apenas usuários que possuem a Role ADMIN poderão incluir novo cliente
     @PostMapping
-    //@ApiOperation("Incluir novo cliente")
+    @ApiOperation("Incluir novo cliente")
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente save(@RequestBody Cliente cliente) {
+    public Cliente save(@RequestBody @Valid Cliente cliente) {
         return repCliente.save(cliente);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')") //Apenas usuários que possuem a Role ADMIN poderão excluir um cliente
     @DeleteMapping("{id}")
-    //@ApiOperation("Excluir cliente")
+    @ApiOperation("Excluir cliente")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id) {
         repCliente.findById(id)
@@ -59,7 +60,7 @@ public class ClienteController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')") //Apenas usuários que possuem a Role ADMIN poderão Alterar um cliente
-    //@ApiOperation("Alterar cliente")
+    @ApiOperation("Alterar cliente")
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable Integer id, @RequestBody Cliente cliente) {
